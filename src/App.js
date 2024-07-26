@@ -40,6 +40,8 @@ function App() {
   };
 
   useGoogleOneTapLogin({
+    clientId,
+
     onSuccess: (codeResponse) => setUser(codeResponse),
     onError: (error) => console.log("Login Failed:", error),
   });
