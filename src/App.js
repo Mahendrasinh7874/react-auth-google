@@ -14,8 +14,9 @@ function App() {
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      console.log({codeResponse})
-      setUser(codeResponse);
+      console.log({ codeResponse });
+      const accessToken = codeResponse?.access_token;
+      setUser(accessToken);
     },
     onError: (error) => console.log("Login Failed:", error),
   });
@@ -24,7 +25,7 @@ function App() {
     if (user) {
       axios
         .get(
-          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user}`,
           {
             headers: {
               Authorization: `Bearer ${user.access_token}`,
@@ -45,7 +46,11 @@ function App() {
   };
 
   useGoogleOneTapLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
+    onSuccess: (codeResponse) => {
+      console.log(codeResponse);
+      const accessToken = codeResponse.credential;
+      setUser(accessToken);
+    },
     onError: (error) => console.log("Login Failed:", error),
   });
 
