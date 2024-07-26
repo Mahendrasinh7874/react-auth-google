@@ -6,12 +6,17 @@ import {
 } from "@react-oauth/google";
 import axios from "axios";
 
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
 function App() {
   const [user, setUser] = useState("");
   const [profile, setProfile] = useState("");
 
   const login = useGoogleLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
+    onSuccess: (codeResponse) => {
+      console.log({codeResponse})
+      setUser(codeResponse);
+    },
     onError: (error) => console.log("Login Failed:", error),
   });
 
@@ -40,8 +45,6 @@ function App() {
   };
 
   useGoogleOneTapLogin({
-    clientId,
-
     onSuccess: (codeResponse) => setUser(codeResponse),
     onError: (error) => console.log("Login Failed:", error),
   });
